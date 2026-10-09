@@ -16,6 +16,7 @@
 #import "SJRotationDefines.h"
 #import "SJTimerControl.h"
 #import <objc/message.h>
+#import "UIView+SJBaseVideoPlayerExtended.h"
 
 @interface SJRotationActivation : NSObject
 @property (nonatomic, readonly, getter=isActive) BOOL active;
@@ -257,7 +258,7 @@
 
 - (void)_prepareWindowForRotation {
     if ( @available(iOS 13.0, *) ) {
-        _window = [SJRotationFullscreenWindow.alloc initWithWindowScene:UIApplication.sharedApplication.keyWindow.windowScene ?: (UIWindowScene *)UIApplication.sharedApplication.connectedScenes.anyObject delegate:self];
+        _window = [SJRotationFullscreenWindow.alloc initWithWindowScene:KWindow.windowScene ?: (UIWindowScene *)UIApplication.sharedApplication.connectedScenes.anyObject delegate:self];
     }
     else {
         _window = [SJRotationFullscreenWindow.alloc initWithFrame:UIScreen.mainScreen.bounds delegate:self];
@@ -354,7 +355,7 @@ API_DEPRECATED("deprecated!", ios(13.0, 16.0)) @implementation UIViewController 
 //        }
 //    }
     
-    UIWindow *keyWindow = UIApplication.sharedApplication.keyWindow;
+    UIWindow *keyWindow = KWindow;
     UIWindow *otherWindow = self.view.window;
     if ( [keyWindow isKindOfClass:SJRotationFullscreenWindow.class] && otherWindow != nil ) {
         SJRotationManager *manager = ((SJRotationFullscreenWindow *)keyWindow).rotationManager;

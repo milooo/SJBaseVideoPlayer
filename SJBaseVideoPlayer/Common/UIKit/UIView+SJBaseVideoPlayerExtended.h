@@ -8,6 +8,34 @@
 #import <UIKit/UIKit.h>
 
 NS_ASSUME_NONNULL_BEGIN
+#define KWindow ({\
+    UIWindow *window = nil;\
+    if (@available(iOS 13.0, *)) {\
+        for (UIScene *scene in [UIApplication sharedApplication].connectedScenes) {\
+            if (scene.activationState == UISceneActivationStateForegroundActive && [scene isKindOfClass:[UIWindowScene class]]) {\
+                for (UIWindow *w in ((UIWindowScene *)scene).windows) {\
+                    if (w.isKeyWindow) {\
+                        window = w;\
+                        break;\
+                    }\
+                }\
+            }\
+            if (window) break;\
+        }\
+    }\
+    if (!window) {\
+        window = [UIApplication sharedApplication].windows.firstObject;\
+        if (!window.isKeyWindow) {\
+             UIWindow *keyWindow = nil;\
+             _Pragma("clang diagnostic push") \
+             _Pragma("clang diagnostic ignored \"-Wdeprecated-declarations\"") \
+             keyWindow = [UIApplication sharedApplication].keyWindow; \
+             _Pragma("clang diagnostic pop") \
+             if (keyWindow) window = keyWindow;\
+        }\
+    }\
+    window;\
+})
 @interface UIView (SJBaseVideoPlayerExtended)
 
 - (BOOL)isViewAppeared:(UIView *_Nullable)childView insets:(UIEdgeInsets)insets;

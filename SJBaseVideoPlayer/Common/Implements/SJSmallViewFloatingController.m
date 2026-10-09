@@ -138,7 +138,7 @@ NS_ASSUME_NONNULL_BEGIN
             superview = currentViewController.view;
         }
         else {
-            superview = UIApplication.sharedApplication.keyWindow;
+            superview = KWindow;
         }
         
         if ( self.floatingView.superview != superview ) {

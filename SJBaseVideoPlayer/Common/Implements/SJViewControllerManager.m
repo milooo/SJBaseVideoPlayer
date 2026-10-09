@@ -102,7 +102,7 @@ NS_ASSUME_NONNULL_BEGIN
 }
 
 - (void)setNeedsStatusBarAppearanceUpdate {
-    [UIApplication.sharedApplication.keyWindow.rootViewController setNeedsStatusBarAppearanceUpdate];
+    [KWindow.rootViewController setNeedsStatusBarAppearanceUpdate];
     
     if ( [_rotationManager isKindOfClass:SJRotationManager.class] && _rotationManager.isFullscreen ) {
         SJRotationManager *rotationManager = (id)_rotationManager;

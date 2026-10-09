@@ -9,6 +9,7 @@
 #import "SJRotationManager_iOS_16_Later.h"
 #import "SJRotationManagerInternal.h"
 #import "SJRotationFullscreenViewController.h"
+#import "UIView+SJBaseVideoPlayerExtended.h"
 
 API_AVAILABLE(ios(16.0))
 @interface SJRotationPortraitOrientationFixingWindow : UIWindow
@@ -20,7 +21,7 @@ API_AVAILABLE(ios(16.0))
     static id instance;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        instance = [SJRotationPortraitOrientationFixingWindow.alloc initWithWindowScene:UIApplication.sharedApplication.keyWindow.windowScene ?: (UIWindowScene *)UIApplication.sharedApplication.connectedScenes.anyObject];
+        instance = [SJRotationPortraitOrientationFixingWindow.alloc initWithWindowScene:KWindow.windowScene ?: (UIWindowScene *)UIApplication.sharedApplication.connectedScenes.anyObject];
     });
     return instance;
 }
@@ -230,11 +231,11 @@ API_AVAILABLE(ios(16.0)) @protocol _SJ_iOS_16_IDE_InvisibleMethods <NSObject>
 
 - (void)setNeedsUpdateOfSupportedInterfaceOrientations {
 #if __IPHONE_OS_VERSION_MAX_ALLOWED >= 160000
-    [UIApplication.sharedApplication.keyWindow.rootViewController setNeedsUpdateOfSupportedInterfaceOrientations];
+    [KWindow.rootViewController setNeedsUpdateOfSupportedInterfaceOrientations];
     [self.window.rootViewController setNeedsUpdateOfSupportedInterfaceOrientations];
 #else
     if ( [self.window.rootViewController respondsToSelector:@selector(setNeedsUpdateOfSupportedInterfaceOrientations)] ) {
-        [(id)UIApplication.sharedApplication.keyWindow.rootViewController setNeedsUpdateOfSupportedInterfaceOrientations];
+        [(id)KWindow.rootViewController setNeedsUpdateOfSupportedInterfaceOrientations];
         [(id)self.window.rootViewController setNeedsUpdateOfSupportedInterfaceOrientations];
     }
     else {
