@@ -39,6 +39,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (instancetype)player;
 - (instancetype)init;
 
+
 ///
 /// 视频画面填充模式
 ///
